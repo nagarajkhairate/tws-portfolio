@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tws-portfolio
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: tws-portfolio
+  template:
+    metadata:
+      labels:
+        app: tws-portfolio
+    spec:
+      containers:
+      - name: tws-portfolio
+        image: nagarajkhairate/tws-portfolio:latest
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tws-portfolio
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 80
+      targetPort: 80
+  selector:
+    app: tws-portfolio
